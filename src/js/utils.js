@@ -6,6 +6,8 @@ require("dotenv").config();
 const notion = new Client({ auth: process.env.NOTION_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID;
 
+//https://www.northdetail.co.jp/blog/2123/
+// Nuxt server middleware   :CORS
 export async function addItem(text) {
   try {
     const response = await notion.pages.create({
