@@ -15,6 +15,29 @@ span {
     text-align: right;
     font-size: 3px; 
 }
+nav {
+    border-bottom: 1px solid black;
+}
+nav a {
+    color: #fff;
+}
+.crumbs ol {
+    list-style-type: none;
+    padding-left: 0;
+}
+.crumb {
+    display: inline-block;
+}
+.crumb a::after {
+    display: inline-block;
+    color: #fff;
+    content: '>';
+    font-size: 80%;
+    font-weight: bold;
+    padding: 0 3px;
+}
+
+
 
 body {
     min-width: 100%;

@@ -30,7 +30,7 @@ function onMouseDown(e) {
   Memo Functions and Handlers
 */
 
-function createMemo(id, text, position, size, updatedAt) {
+function createMemo(id, text, position, size, createdAt, updatedAt) {
   const memo = document.createElement("div");
   memo.setAttribute("data-id", id);
   memo.classList.add("memo");
@@ -47,8 +47,17 @@ function createMemo(id, text, position, size, updatedAt) {
 
   // DATETIME
   const dt = document.createElement("span");
-  dt.textContent = updatedAt;
+  dt.textContent = createdAt || updatedAt;
   memo.appendChild(dt);
+
+  /*
+  <div contenteditable="true">
+    <ul>
+    <li>test</li>
+    </ul>
+  </div>
+  */
+
 
   if (text) { textarea.value = text; }
 
@@ -63,6 +72,7 @@ function createMemo(id, text, position, size, updatedAt) {
   textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
+    memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString()};
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
     memos[id] = { ...memos[id], text: e.target.value };
     setLocalStorageItem("manifest_memos", memos);
@@ -377,7 +387,8 @@ function handleBoardDragEnd(e) {
 
   if (width >= 80 && height >= 80) {
     const id = generateUUID();
-    const memo = createMemo(id, null, { top, left }, { width, height });
+    const dateNow = new Date().toLocaleString();
+    const memo = createMemo(id, null, { top, left }, { width, height }, dateNow, dateNow);
     board.appendChild(memo);
 
     const textarea = memo.querySelectorAll(".input")[0];
@@ -521,7 +532,7 @@ function onLoad() {
     setLocalStorageItem("manifest_memos", memos);
   } else {
     for (const key of Object.keys(memos)) {
-      const memo = createMemo(key, memos[key].text, memos[key].position, memos[key].size, memos[key].updatedAt);
+      const memo = createMemo(key, memos[key].text, memos[key].position, memos[key].size, memos[key].createdAt, memos[key].updatedAt);
       board.appendChild(memo);
     }
   }
