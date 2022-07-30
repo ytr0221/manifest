@@ -37,7 +37,6 @@ function onMouseDown(e) {
 TrashBox Space right-bottom corner
 同じ行で何番目か
 
-
 # Library
 
 Linkify: https://github.com/Hypercontext/linkifyjs
@@ -74,12 +73,12 @@ memo {
 */
 
 function getLineNumberAtCursorPosition(text, position) {
-  console.log("lineNum: ", text.substr(0, position).split('\n').length);
-	return text.substr(0, position).split('\n').length;
+  console.log("lineNum: ", text.substr(0, position).split("\n").length);
+  return text.substr(0, position).split("\n").length;
 }
 function getCursorPositionInLine(text, lineNumber) {
-  console.log(text.split('\n')[lineNumber-1])
-	return text.split("\n")[lineNumber-1];
+  console.log(text.split("\n")[lineNumber - 1]);
+  return text.split("\n")[lineNumber - 1];
 }
 
 function createMemo(id, text, position, size, createdAt, updatedAt) { // projectId,
@@ -124,7 +123,7 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
-    const content = e.target.value; 
+    const content = e.target.value;
     memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString() };
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
     memos[id] = { ...memos[id], text: content };
@@ -133,9 +132,8 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
     // Bigram detector for monitoring command
     var cursorStartPosition = textarea.selectionStart;
     var cursorEndPosition = textarea.selectionEnd;
-    if ( (cursorStartPosition === cursorEndPosition) && cursorStartPosition > 1) {
+    if ((cursorStartPosition === cursorEndPosition) && cursorStartPosition > 1) {
       const bigram = content.substring(cursorStartPosition - 2, cursorStartPosition);
-      console.log("bigram: ", bigram);
       if (bigram === "- ") {
         console.log("detected!");
         getCursorPositionInLine(content, getLineNumberAtCursorPosition(content, cursorStartPosition));
