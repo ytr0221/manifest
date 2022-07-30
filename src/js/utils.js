@@ -1,33 +1,33 @@
-require('dotenv').config();
-import 'dotenv/config'
-import { Client } from "@notionhq/client"
-const notion = new Client({ auth: process.env.NOTION_KEY })
-const databaseId = process.env.NOTION_DATABASE_ID
+import "dotenv/config";
+import { Client } from "@notionhq/client";
+
+import { GRID_SIZE } from "./globals";
+require("dotenv").config();
+const notion = new Client({ auth: process.env.NOTION_KEY });
+const databaseId = process.env.NOTION_DATABASE_ID;
 
 export async function addItem(text) {
   try {
     const response = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
-        Name: { 
-          title:[
+        Name: {
+          title: [
             {
-              "text": {
-                "content": text
+              text: {
+                content: text
               }
             }
           ]
         }
-      },
-    })
-    console.log(response)
-    console.log("Success! Entry added.")
+      }
+    });
+    console.log(response);
+    console.log("Success! Entry added.");
   } catch (error) {
-    console.error(error.body)
+    console.error(error.body);
   }
 }
-
-import { GRID_SIZE } from "./globals";
 
 export function confirm(text) {
   return window.confirm(text);

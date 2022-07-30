@@ -1,12 +1,11 @@
-require('dotenv').config();
-console.log(process.env.NOTION_DATABASE_ID);
-console.log(process.env.NOTION_KEY);
-
-
 import { GRID_SIZE, MARGIN, DRAG_INDEX, STATIC_INDEX, DEFAULT_MEMO } from "./globals";
 import { snapToGrid, confirm, generateUUID, getLocalStorageItem, setLocalStorageItem, decreaseAllMemoIndexes, checkBounds, addItem } from "./utils";
 
 import "../sass/index.scss";
+
+require("dotenv").config();
+console.log(process.env.NOTION_DATABASE_ID);
+console.log(process.env.NOTION_KEY);
 
 let theme = "light";
 let activeMemo;
@@ -191,7 +190,6 @@ function handleMemoClose(e) {
     setLocalStorageItem("manifest_memos", memos);
 
     board.removeChild(e.target.parentNode);
-
 
     addItem("Yurts in Big Sur, California");
   }
