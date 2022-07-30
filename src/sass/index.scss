@@ -9,15 +9,14 @@
 
 span {
     position: relative;
-    bottom: 15px;
+    bottom: 1em;
     float: right;
     vertical-align: middle;
     text-align: right;
-    font-size: 3px; 
+    font-size: 0.5em;
 }
 nav {
     width: 100%;
-    padding: 1em;
     border-bottom: 1px solid var(--background);
 }
 nav a {
@@ -26,7 +25,7 @@ nav a {
 .crumbs ol {
     float: left;
     list-style-type: none;
-    padding-left: 0;
+    padding-left: 1em;
 }
 .crumb {
     display: inline-block;
