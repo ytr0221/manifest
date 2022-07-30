@@ -58,7 +58,6 @@ function createMemo(id, text, position, size, createdAt, updatedAt) {
   </div>
   */
 
-
   if (text) { textarea.value = text; }
 
   textarea.addEventListener("focus", function (e) {
@@ -72,7 +71,7 @@ function createMemo(id, text, position, size, createdAt, updatedAt) {
   textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
-    memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString()};
+    memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString() };
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
     memos[id] = { ...memos[id], text: e.target.value };
     setLocalStorageItem("manifest_memos", memos);

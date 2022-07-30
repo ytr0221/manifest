@@ -16,10 +16,10 @@ span {
     font-size: 3px; 
 }
 nav {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--background);
 }
 nav a {
-    color: #fff;
+    color: var(--foreground);
 }
 .crumbs ol {
     list-style-type: none;
@@ -30,7 +30,7 @@ nav a {
 }
 .crumb a::after {
     display: inline-block;
-    color: #fff;
+    color: var(--foreground);
     content: '>';
     font-size: 80%;
     font-weight: bold;
