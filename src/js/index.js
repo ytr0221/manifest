@@ -32,6 +32,16 @@ function onMouseDown(e) {
 
 /*
 
+# Features
+
+TrashBox Space right-bottom corner
+同じ行で何番目か
+
+
+# Library
+
+Linkify: https://github.com/Hypercontext/linkifyjs
+
 # Data Structure
 
 user {
@@ -63,6 +73,15 @@ memo {
 
 */
 
+function getLineNumberAtCursorPosition(text, position) {
+  console.log("lineNum: ", text.substr(0, position).split('\n').length);
+	return text.substr(0, position).split('\n').length;
+}
+function getCursorPositionInLine(text, lineNumber) {
+  console.log(text.split('\n')[lineNumber-1])
+	return text.split("\n")[lineNumber-1];
+}
+
 function createMemo(id, text, position, size, createdAt, updatedAt) { // projectId,
   const memo = document.createElement("div");
   memo.setAttribute("data-id", id);
@@ -73,6 +92,7 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   memo.style.height = `${size.height}px`;
   memo.style.zIndex = STATIC_INDEX;
 
+  // const textarea = document.createElement("p"); //contentEditable true
   const textarea = document.createElement("textarea");
   textarea.classList.add("input");
   textarea.setAttribute("placeholder", "");
@@ -104,10 +124,27 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
+    const content = e.target.value; 
     memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString() };
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
-    memos[id] = { ...memos[id], text: e.target.value };
+    memos[id] = { ...memos[id], text: content };
     setLocalStorageItem("manifest_memos", memos);
+
+    // Bigram detector for monitoring command
+    var cursorStartPosition = textarea.selectionStart;
+    var cursorEndPosition = textarea.selectionEnd;
+    if ( (cursorStartPosition === cursorEndPosition) && cursorStartPosition > 1) {
+      const bigram = content.substring(cursorStartPosition - 2, cursorStartPosition);
+      console.log("bigram: ", bigram);
+      if (bigram === "- ") {
+        console.log("detected!");
+        getCursorPositionInLine(content, getLineNumberAtCursorPosition(content, cursorStartPosition));
+        const replaced = content.replace(/- /g, "<ul><li></li></ul>");
+        e.target.value = replaced;
+        memos[id] = { ...memos[id], text: replaced };
+        setLocalStorageItem("manifest_memos", memos);
+      }
+    }
   }, { passive: false, useCapture: false });
   // https://stackoverflow.com/questions/12661293/save-and-load-date-localstorage
 
