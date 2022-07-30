@@ -1,5 +1,5 @@
 import { GRID_SIZE, MARGIN, DRAG_INDEX, STATIC_INDEX, DEFAULT_MEMO } from "./globals";
-import { snapToGrid, confirm, generateUUID, getLocalStorageItem, setLocalStorageItem, decreaseAllMemoIndexes, checkBounds} from "./utils";
+import { snapToGrid, confirm, generateUUID, getLocalStorageItem, setLocalStorageItem, decreaseAllMemoIndexes, checkBounds } from "./utils";
 import { addItem } from "./notion-utils";
 
 import "../sass/index.scss";
@@ -30,7 +30,7 @@ function onMouseDown(e) {
   Memo Functions and Handlers
 */
 
-function createMemo(id, text, position, size) {
+function createMemo(id, text, position, size, updatedAt) {
   const memo = document.createElement("div");
   memo.setAttribute("data-id", id);
   memo.classList.add("memo");
@@ -42,8 +42,13 @@ function createMemo(id, text, position, size) {
 
   const textarea = document.createElement("textarea");
   textarea.classList.add("input");
-  textarea.setAttribute("placeholder", "Add a short memo...");
+  textarea.setAttribute("placeholder", "");
   textarea.setAttribute("autocomplete", true);
+
+  // DATETIME
+  const dt = document.createElement("span");
+  dt.textContent = updatedAt;
+  memo.appendChild(dt);
 
   if (text) { textarea.value = text; }
 
@@ -58,9 +63,11 @@ function createMemo(id, text, position, size) {
   textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
+    memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
     memos[id] = { ...memos[id], text: e.target.value };
     setLocalStorageItem("manifest_memos", memos);
   }, { passive: false, useCapture: false });
+  // https://stackoverflow.com/questions/12661293/save-and-load-date-localstorage
 
   memo.appendChild(textarea);
 
@@ -509,11 +516,12 @@ function onLoad() {
     board.appendChild(memo);
 
     const memos = {};
+    // DEFAULT MEMO !!!!!!!!
     memos[DEFAULT_MEMO.id] = { text: DEFAULT_MEMO.text, position: DEFAULT_MEMO.position, size: DEFAULT_MEMO.size };
     setLocalStorageItem("manifest_memos", memos);
   } else {
     for (const key of Object.keys(memos)) {
-      const memo = createMemo(key, memos[key].text, memos[key].position, memos[key].size);
+      const memo = createMemo(key, memos[key].text, memos[key].position, memos[key].size, memos[key].updatedAt);
       board.appendChild(memo);
     }
   }
