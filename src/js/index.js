@@ -1,11 +1,8 @@
 import { GRID_SIZE, MARGIN, DRAG_INDEX, STATIC_INDEX, DEFAULT_MEMO } from "./globals";
-import { snapToGrid, confirm, generateUUID, getLocalStorageItem, setLocalStorageItem, decreaseAllMemoIndexes, checkBounds, addItem } from "./utils";
+import { snapToGrid, confirm, generateUUID, getLocalStorageItem, setLocalStorageItem, decreaseAllMemoIndexes, checkBounds} from "./utils";
+import { addItem } from "./notion-utils";
 
 import "../sass/index.scss";
-
-require("dotenv").config();
-console.log(process.env.NOTION_DATABASE_ID);
-console.log(process.env.NOTION_KEY);
 
 let theme = "light";
 let activeMemo;
