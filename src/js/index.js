@@ -30,7 +30,30 @@ function onMouseDown(e) {
   Memo Functions and Handlers
 */
 
-function createMemo(id, text, position, size, createdAt, updatedAt) {
+/*
+
+# Data Structure
+
+user {
+
+}
+
+memo {
+  id,
+  text,
+  position: {x,y},
+  size:{height, width},
+  status:{createdAt, updatedAt, done},
+  projectId
+ 
+  (due, inProgress, priority, tags)
+  (sub, connectedTo)
+}
+
+
+*/
+
+function createMemo(id, text, position, size, createdAt, updatedAt) { //projectId, 
   const memo = document.createElement("div");
   memo.setAttribute("data-id", id);
   memo.classList.add("memo");
