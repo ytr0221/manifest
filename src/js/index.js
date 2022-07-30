@@ -38,22 +38,32 @@ user {
 
 }
 
+project {
+  name,
+  projectId,
+  description,
+  relation,
+  tags
+
+  (subProjects)
+}
+
 memo {
+  (title),
   id,
   text,
   position: {x,y},
   size:{height, width},
   status:{createdAt, updatedAt, done},
   projectId
- 
-  (due, inProgress, priority, tags)
-  (sub, connectedTo)
-}
 
+  (due, inProgress, priority, tags)
+  (connectedTo)
+}
 
 */
 
-function createMemo(id, text, position, size, createdAt, updatedAt) { //projectId, 
+function createMemo(id, text, position, size, createdAt, updatedAt) { // projectId,
   const memo = document.createElement("div");
   memo.setAttribute("data-id", id);
   memo.classList.add("memo");
