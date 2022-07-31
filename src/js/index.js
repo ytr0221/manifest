@@ -26,6 +26,27 @@ function onMouseDown(e) {
   }
 };
 
+function whatTimeIsIt() {
+  const now = new Date();
+
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  /* const time = {
+    hours: hours.toString().padStart(true ? 2 : 1, "0"),
+    minutes: minutes.toString().padStart(2, "0"),
+    seconds: seconds.toString().padStart(2, "0")
+  }; */
+  const time = {
+    hours: hours.toString.padStart(2, "0"),
+    minutes: minutes.toString().padStart(2, "0"),
+    seconds: seconds.toString().padStart(2, "0")
+  };
+
+  return time;
+}
+
 /*
   Memo Functions and Handlers
 */
@@ -89,7 +110,7 @@ function setCaretPosition(elemId, caretPos) {
       } else { elem.focus(); }
     }
   }
-}*/
+} */
 function getLineNumberAtCursorPosition(text, position) {
   console.log("lineNum: ", text.substr(0, position).split("\n").length);
   return text.substr(0, position).split("\n").length;
@@ -140,14 +161,6 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   const dt = document.createElement("span");
   dt.textContent = createdAt || updatedAt;
   memo.appendChild(dt);
-
-  /*
-  <div contenteditable="true">
-    <ul>
-    <li>test</li>
-    </ul>
-  </div>
-  */
 
   if (text) { textarea.value = text; }
 
@@ -572,6 +585,7 @@ function onKeydown(e) {
   if ((e.code === "KeyT" || e.keyCode === 84) && e.altKey) {
     toggleTheme();
     addDOM();
+    console.log(whatTimeIsIt());
   } // else if ((e.code === "KeyP" || e.keyCode === 84) && e.altKey) {
   // toggleTheme();
   // }
