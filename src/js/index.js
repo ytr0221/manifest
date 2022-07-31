@@ -72,6 +72,24 @@ memo {
 
 */
 
+// working with text and caret
+/*
+function setCaretPosition(elemId, caretPos) {
+  var elem = document.getElementById(elemId);
+
+  if (elem != null) {
+    if (elem.createTextRange) {
+      var range = elem.createTextRange();
+      range.move("character", caretPos);
+      range.select();
+    } else {
+      if (elem.selectionStart) {
+        elem.focus();
+        elem.setSelectionRange(caretPos, caretPos);
+      } else { elem.focus(); }
+    }
+  }
+}*/
 function getLineNumberAtCursorPosition(text, position) {
   console.log("lineNum: ", text.substr(0, position).split("\n").length);
   return text.substr(0, position).split("\n").length;
@@ -79,6 +97,25 @@ function getLineNumberAtCursorPosition(text, position) {
 function getCursorPositionInLine(text, lineNumber) {
   console.log(text.split("\n")[lineNumber - 1]);
   return text.split("\n")[lineNumber - 1];
+}
+function addDOM() {
+  const html = "<ul></ul>";
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  range.deleteContents();
+
+  const node = document.createElement("div");
+
+  const child = document.createElement("li");
+  child.append("");
+
+  node.style.whiteSpace = "pre";
+  node.innerHTML = html;
+  node.appendChild(child);
+  range.insertNode(node);
+
+  // 挿入文字列の末尾にカーソルを移動させる
+  selection.collapseToEnd();
 }
 
 function createMemo(id, text, position, size, createdAt, updatedAt) { // projectId,
@@ -91,10 +128,12 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   memo.style.height = `${size.height}px`;
   memo.style.zIndex = STATIC_INDEX;
 
-  // const textarea = document.createElement("p"); //contentEditable true
-  const textarea = document.createElement("textarea");
+  const textarea = document.createElement("div"); // contentEditable true
+  textarea.setAttribute("contentEditable", true);
+
+  // const textarea = document.createElement("textarea");
   textarea.classList.add("input");
-  textarea.setAttribute("placeholder", "");
+  textarea.setAttribute("placeholder", "\n\n\n\n\n\n\n\n");
   textarea.setAttribute("autocomplete", true);
 
   // DATETIME
@@ -137,14 +176,19 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
       if (bigram === "- ") {
         console.log("detected!");
         getCursorPositionInLine(content, getLineNumberAtCursorPosition(content, cursorStartPosition));
-        const replaced = content.replace(/- /g, "<ul><li></li></ul>");
-        e.target.value = replaced;
-        memos[id] = { ...memos[id], text: replaced };
+        // const insert = '<ul><li></li></ul>';
+        /* const replaced = content.replace(/- /g, insert);
+        //e.target.value = replaced;
+        //memos[id] = { ...memos[id], text: replaced };
+        //e.target.setSelectionRange(cursorStartPosition+insert.length-2, cursorStartPosition+insert.length-2); */
+        // document.execCommand('insertText', false, 'test');
+        // document.execCommand('insertHTML', false, insert);
         setLocalStorageItem("manifest_memos", memos);
       }
     }
   }, { passive: false, useCapture: false });
   // https://stackoverflow.com/questions/12661293/save-and-load-date-localstorage
+  // https://dev-moyashi.hatenablog.com/entry/2021/10/03/202750
 
   memo.appendChild(textarea);
 
@@ -527,7 +571,10 @@ function handleTheme() {
 function onKeydown(e) {
   if ((e.code === "KeyT" || e.keyCode === 84) && e.altKey) {
     toggleTheme();
-  }
+    addDOM();
+  } // else if ((e.code === "KeyP" || e.keyCode === 84) && e.altKey) {
+  // toggleTheme();
+  // }
 }
 
 function onResize() {
