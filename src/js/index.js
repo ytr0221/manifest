@@ -63,7 +63,6 @@ Sliders for showing the progress.
 Color changer.
 Pomodoro like timer.
 
-
 # Library
 
 Linkify: https://github.com/Hypercontext/linkifyjs
@@ -646,6 +645,33 @@ function onLoad() {
 
   board.addEventListener("mousedown", onMouseDown, { passive: false, useCapture: false });
   board.addEventListener("touchstart", onMouseDown, { passive: false, useCapture: false });
+  
+  document.oncontextmenu = function () { return false; }
+  let menu = document.getElementById("contextmenu");
+  const menuBar = document.createElement("div");
+  menuBar.classList.add("menuBar");
+  menuBar.innerHTML = "menu";
+  menu.appendChild(menuBar);
+
+ // menu.setAttribute("id", "contextmenu");
+  window.addEventListener('contextmenu', function (e) {
+    menu.style.left = e.pageX + 'px';
+    menu.style.top = e.pageY + 'px';
+    menu.classList.add('show');
+
+  });
+
+  window.addEventListener('click', function () {
+
+    if (menu.classList.contains('show')) {
+      menu.classList.remove('show');
+    }
+
+  });
+
+
+
+
 
   main.appendChild(canvas);
   main.appendChild(board);
