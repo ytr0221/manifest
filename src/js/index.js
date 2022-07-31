@@ -58,6 +58,12 @@ function whatTimeIsIt() {
 TrashBox Space right-bottom corner
 同じ行で何番目か
 
+# Accessory
+Sliders for showing the progress.
+Color changer.
+Pomodoro like timer.
+
+
 # Library
 
 Linkify: https://github.com/Hypercontext/linkifyjs
