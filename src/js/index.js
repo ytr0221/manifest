@@ -179,8 +179,6 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
 
     // Bigram detector for monitoring command
 
-    
-
     var cursorStartPosition = textarea.selectionStart;
     var cursorEndPosition = textarea.selectionEnd;
     if ((cursorStartPosition === cursorEndPosition) && cursorStartPosition > 1) {
@@ -195,10 +193,9 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
         //e.target.setSelectionRange(cursorStartPosition+insert.length-2, cursorStartPosition+insert.length-2);
         // document.execCommand('insertText', false, 'test');
         // document.execCommand('insertHTML', false, insert);
-        setLocalStorageItem("manifest_memos", memos);*/
+        setLocalStorageItem("manifest_memos", memos); */
       }
     }
-    
   }, { passive: false, useCapture: false });
   // https://stackoverflow.com/questions/12661293/save-and-load-date-localstorage
   // https://dev-moyashi.hatenablog.com/entry/2021/10/03/202750
@@ -652,7 +649,7 @@ function onLoad() {
 
   document.oncontextmenu = function () { return false; };
   const menu = document.getElementById("contextmenu");
-    /*
+  /*
   const menuBar = document.createElement("div");
   menuBar.classList.add("menuBar");
   menuBar.innerHTML = "menu";
