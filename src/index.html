@@ -65,22 +65,24 @@
 	</head>
 	<body>
 
-		<nav class="crumbs" style="position: fixed">
+		<iframe style="width: 100%; height:2em; position: fixed;" src="https://time.pablopunk.com/?seconds&fg=white&bg=transparent&fontSize=1em"></iframe>
+		<nav class="crumbs">
+			<a href="#" style="float: right; padding-right: 2em;">about</a>
 			<ol>
 				<li class="crumb"><a href="#">root</a></li>
 				<li class="crumb"><a href="#">project</a></li>
 				<li class="crumb">main</li>
 			</ol>
-			<a href="#" style="float: right; padding-right: 2em;">about</a>
 		</nav>
 
-		<iframe style="float: right; width: 200px; height:100px;" src="https://time.pablopunk.com/?seconds&fg=royalblue&bg=transparent&fontSize=30px"></iframe>
+
 
 		<div id="contextmenu">
-			<ul>
-			  <li class="list-group-item"><a href="https://mebee.info/" target="_blank">mebee</a></li>
-			  <li class="list-group-item">test1</li>
-			  <li class="list-group-item">test2</li>
+			<ul class="menu-items">
+			  <li class="menu-item">Set Due</li>
+			  <li class="menu-item">Start Timer</li>
+			  <li class="menu-item">Change Priority</li>
+			  <li class="menu-item">Delete</li>
 			</ul>
 		</div>
 

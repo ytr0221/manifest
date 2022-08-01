@@ -7,7 +7,8 @@
     --dark-gray: rgba(0, 0, 0, 0.25);
 }
 
-span {
+
+span { //datetime
     position: relative;
     bottom: 1.5em;
     float: right;
@@ -15,7 +16,9 @@ span {
     text-align: right;
     font-size: 0.5em;
 }
+
 nav {
+    padding: 0.5em;
     width: 100%;
     border-bottom: 1px solid var(--background);
 }
@@ -39,14 +42,14 @@ nav a {
     padding: 0 3px;
 }
 
-
+/*
 ul {
     padding-top: 1em;
     padding-bottom: 1em;
 }
 li {
     padding-left: 0.5em;
-}
+}*/
 
 
 #contextmenu {
@@ -54,37 +57,84 @@ li {
     position:fixed;
     left:0px;
     top:0px;
+    box-shadow:2px 2px 3px rgba(0, 0, 0, 0.5);
+
+    //padding:3px;    
     widows:150px;
     width: 150px;
-    height:200px;
-    opacity: 0.7;
+    //height:200px;
+
+    opacity: 0.75;
     background-color: #333;
     border: 1px solid var(--foreground);
-    font-size: 10px;
+
     z-index: 999999;
+
+    vertical-align: center;
+    text-align: center;
 }
 #contextmenu.show {
     display: block;
 }
-#contextmenu li {
-    list-style: none;
-    margin: 0px;
-    padding: 5px;
-    cursor:pointer;
+#contextmenu ul.menu-items {
+    margin:0;
+    padding:0;
+
+    //display : table;
 }
-.menuBar {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    color: #fff;//var(--foreground);
-    font-size: 10px;
-    font-weight: normal;
-    text-align: center;
-    line-height: 15px;
+#contextmenu ul.menu-items li.menu-item {
+	//display : table-cell; 横並びにする
+	vertical-align : middle ;
+
+    height: 3em;
+    line-height: 3em;
+
+    position:relative;
     width: 150px;
-    height: 16px;
-    border-bottom: 1px solid var(--foreground);
+
+    margin:0;
+    padding:0;
+    list-style:none;
+    cursor: pointer;
+
+
+    color: #fff;
+
+    //border:1px solid transparent;
+    //border-top: 0.5px solid #fff;
+    border-bottom: 0.5px solid #fff;
+
+    font-size: 12px;
 }
+
+#contextmenu ul.menu-items :first-child {
+    border-top: 0.5px solid #fff;
+  }
+
+#contextmenu li:hover {
+   // border:1px solid #06d;
+    background-color:#e6f1ff;
+}
+
+#contextmenu::before {
+    content: '-';
+    position: relative;
+    //top: 0px;
+    //left: 0px;
+    font-size: 12px;
+    font-weight: normal;
+    //text-align: center;
+   
+    margin:0;
+   // padding:2px 0;
+
+    line-height: 20px;
+    height: 4em;
+
+    color: #fff;
+    background-color: #333;
+}
+
 
 body {
     min-width: 100%;
@@ -222,7 +272,15 @@ body {
                     left: 0px;
                     width: calc(100% - 32px);
                     height: calc(100% - 49px);
-                    padding: 16px;
+
+                    //padding: 16px;
+                    padding-top: 1em;
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    padding-bottom: -1em;
+                    //padding-bottom: calc(-5em - 16px);
+                    //padding-bottom: calc(-4em);
+
                     margin: 0;
                     border: 0;
                     outline: 0;
@@ -238,7 +296,7 @@ body {
                     scrollbar-width: thin;
 
                     &::-webkit-scrollbar {
-                        width: 1px;
+                        width: 2px;
                         height: 6px;
                     }
                     &::-webkit-scrollbar-track {

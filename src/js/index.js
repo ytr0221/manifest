@@ -153,10 +153,10 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   memo.style.height = `${size.height}px`;
   memo.style.zIndex = STATIC_INDEX;
 
-  const textarea = document.createElement("div"); // contentEditable true
-  textarea.setAttribute("contentEditable", true);
+  // const textarea = document.createElement("div"); // contentEditable true
+  // textarea.setAttribute("contentEditable", true);
 
-  // const textarea = document.createElement("textarea");
+  const textarea = document.createElement("textarea");
   textarea.classList.add("input");
   textarea.setAttribute("placeholder", "");
   textarea.setAttribute("autocomplete", true);
@@ -166,11 +166,11 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   dt.textContent = createdAt || updatedAt;
   memo.appendChild(dt);
 
-  if (text) { textarea.innerHTML = text; } // textarea.value = text; }//
+  if (text) { textarea.value = text; }// textarea.innerHTML = text; } //
 
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
-    const content = e.target.innerHTML;// e.target.value; //innerHTML;//textContent; //e.target.value;
+    const content = e.target.value; // innerHTML;//textContent; //e.target.value;
     console.log(content);
     memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString() };
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
@@ -178,6 +178,9 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
     setLocalStorageItem("manifest_memos", memos);
 
     // Bigram detector for monitoring command
+
+    
+
     var cursorStartPosition = textarea.selectionStart;
     var cursorEndPosition = textarea.selectionEnd;
     if ((cursorStartPosition === cursorEndPosition) && cursorStartPosition > 1) {
@@ -189,12 +192,13 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
         /* const replaced = content.replace(/- /g, insert);
         //e.target.value = replaced;
         //memos[id] = { ...memos[id], text: replaced };
-        //e.target.setSelectionRange(cursorStartPosition+insert.length-2, cursorStartPosition+insert.length-2); */
+        //e.target.setSelectionRange(cursorStartPosition+insert.length-2, cursorStartPosition+insert.length-2);
         // document.execCommand('insertText', false, 'test');
         // document.execCommand('insertHTML', false, insert);
-        setLocalStorageItem("manifest_memos", memos);
+        setLocalStorageItem("manifest_memos", memos);*/
       }
     }
+    
   }, { passive: false, useCapture: false });
   // https://stackoverflow.com/questions/12661293/save-and-load-date-localstorage
   // https://dev-moyashi.hatenablog.com/entry/2021/10/03/202750
@@ -648,10 +652,11 @@ function onLoad() {
 
   document.oncontextmenu = function () { return false; };
   const menu = document.getElementById("contextmenu");
+    /*
   const menuBar = document.createElement("div");
   menuBar.classList.add("menuBar");
   menuBar.innerHTML = "menu";
-  menu.appendChild(menuBar);
+  menu.appendChild(menuBar); */
 
   // menu.setAttribute("id", "contextmenu");
   window.addEventListener("contextmenu", function (e) {
