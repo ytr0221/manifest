@@ -131,7 +131,6 @@ function addDOM() {
   range.deleteContents();
 
   const node = document.createElement("div");
-
   const child = document.createElement("li");
   child.append("");
 
@@ -159,7 +158,7 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
 
   // const textarea = document.createElement("textarea");
   textarea.classList.add("input");
-  textarea.setAttribute("placeholder", "\n\n\n\n\n\n\n\n");
+  textarea.setAttribute("placeholder", "");
   textarea.setAttribute("autocomplete", true);
 
   // DATETIME
@@ -167,20 +166,12 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   dt.textContent = createdAt || updatedAt;
   memo.appendChild(dt);
 
-  if (text) { textarea.value = text; }
+  if (text) { textarea.innerHTML = text; } // textarea.value = text; }//
 
-  textarea.addEventListener("focus", function (e) {
-    e.target.classList.add("active");
-
-    decreaseAllMemoIndexes();
-
-    activeMemo = e.target.parentNode;
-    activeMemo.style.zIndex = STATIC_INDEX;
-  });
-  textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
-    const content = e.target.value;
+    const content = e.target.innerHTML;// e.target.value; //innerHTML;//textContent; //e.target.value;
+    console.log(content);
     memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString() };
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
     memos[id] = { ...memos[id], text: content };
@@ -207,6 +198,15 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   }, { passive: false, useCapture: false });
   // https://stackoverflow.com/questions/12661293/save-and-load-date-localstorage
   // https://dev-moyashi.hatenablog.com/entry/2021/10/03/202750
+  textarea.addEventListener("focus", function (e) {
+    e.target.classList.add("active");
+
+    decreaseAllMemoIndexes();
+
+    activeMemo = e.target.parentNode;
+    activeMemo.style.zIndex = STATIC_INDEX;
+  });
+  textarea.addEventListener("blur", function (e) { e.target.classList.remove("active"); }, { passive: false, useCapture: false });
 
   memo.appendChild(textarea);
 
@@ -645,33 +645,26 @@ function onLoad() {
 
   board.addEventListener("mousedown", onMouseDown, { passive: false, useCapture: false });
   board.addEventListener("touchstart", onMouseDown, { passive: false, useCapture: false });
-  
-  document.oncontextmenu = function () { return false; }
-  let menu = document.getElementById("contextmenu");
+
+  document.oncontextmenu = function () { return false; };
+  const menu = document.getElementById("contextmenu");
   const menuBar = document.createElement("div");
   menuBar.classList.add("menuBar");
   menuBar.innerHTML = "menu";
   menu.appendChild(menuBar);
 
- // menu.setAttribute("id", "contextmenu");
-  window.addEventListener('contextmenu', function (e) {
-    menu.style.left = e.pageX + 'px';
-    menu.style.top = e.pageY + 'px';
-    menu.classList.add('show');
-
+  // menu.setAttribute("id", "contextmenu");
+  window.addEventListener("contextmenu", function (e) {
+    menu.style.left = e.pageX + "px";
+    menu.style.top = e.pageY + "px";
+    menu.classList.add("show");
   });
 
-  window.addEventListener('click', function () {
-
-    if (menu.classList.contains('show')) {
-      menu.classList.remove('show');
+  window.addEventListener("click", function () {
+    if (menu.classList.contains("show")) {
+      menu.classList.remove("show");
     }
-
   });
-
-
-
-
 
   main.appendChild(canvas);
   main.appendChild(board);
