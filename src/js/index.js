@@ -55,6 +55,12 @@ function whatTimeIsIt() {
 
 # Features
 
+データをどこに保存するか。
+①最優先は、firebaseとの連携か？
+②React, Next.js化
+
+どっち？
+
 TrashBox Space right-bottom corner
 同じ行で何番目か
 
