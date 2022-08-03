@@ -4,49 +4,6 @@ import { addItem } from "./notion-utils";
 
 import "../sass/index.scss";
 
-let theme = "light";
-let activeMemo;
-
-let main, canvas, board, selection;
-let currentMouse, currentSize;
-
-/*
-  Generic Event Handlers
-*/
-
-function onMouseDown(e) {
-  if (e.target === board) {
-    handleBoardDragStart(e);
-  } else {
-    if (e.target.classList[0] === "drag") {
-      handleMemoDragStart(e);
-    } else if (e.target.classList[0] === "resize") {
-      handleMemoResizeStart(e);
-    }
-  }
-};
-
-function whatTimeIsIt() {
-  const now = new Date();
-
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
-
-  /* const time = {
-    hours: hours.toString().padStart(true ? 2 : 1, "0"),
-    minutes: minutes.toString().padStart(2, "0"),
-    seconds: seconds.toString().padStart(2, "0")
-  }; */
-  const time = {
-    hours: hours.toString.padStart(2, "0"),
-    minutes: minutes.toString().padStart(2, "0"),
-    seconds: seconds.toString().padStart(2, "0")
-  };
-
-  return time;
-}
-
 /*
   Memo Functions and Handlers
 */
@@ -56,7 +13,7 @@ function whatTimeIsIt() {
 # Features
 
 データをどこに保存するか。
-①最優先は、firebaseとの連携か？
+①最優先は、firebaseとの連携か
 ②React, Next.js化
 
 どっち？
@@ -122,6 +79,60 @@ function setCaretPosition(elemId, caretPos) {
     }
   }
 } */
+import toggleSwitch from "../assets/audio/toggle_switch.mp3";
+
+let theme = "light";
+let activeMemo;
+
+let main, canvas, board, selection;
+let currentMouse, currentSize;
+
+/*
+  Generic Event Handlers
+*/
+
+function onMouseDown(e) {
+  if (e.target === board) {
+    handleBoardDragStart(e);
+  } else {
+    if (e.target.classList[0] === "drag") {
+      handleMemoDragStart(e);
+    } else if (e.target.classList[0] === "resize") {
+      handleMemoResizeStart(e);
+    }
+  }
+};
+
+function whatTimeIsIt() {
+  const now = new Date();
+
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  /* const time = {
+    hours: hours.toString().padStart(true ? 2 : 1, "0"),
+    minutes: minutes.toString().padStart(2, "0"),
+    seconds: seconds.toString().padStart(2, "0")
+  }; */
+  const time = {
+    hours: hours.toString.padStart(2, "0"),
+    minutes: minutes.toString().padStart(2, "0"),
+    seconds: seconds.toString().padStart(2, "0")
+  };
+
+  return time;
+}
+const seToggleSwitch = new Audio(toggleSwitch);
+// console.log(sound)
+
+function audioPlay(se) {
+  se.currentTime = 0;
+  se.play(); // 再生
+  // document.getElementById('se').currentTime = 0; //連続クリックに対応
+  // document.getElementById('se').play(); //クリックしたら音を再生
+}
+
 function getLineNumberAtCursorPosition(text, position) {
   console.log("lineNum: ", text.substr(0, position).split("\n").length);
   return text.substr(0, position).split("\n").length;
@@ -177,7 +188,7 @@ function createMemo(id, text, position, size, createdAt, updatedAt) { // project
   textarea.addEventListener("input", function (e) {
     const memos = getLocalStorageItem("manifest_memos");
     const content = e.target.value; // innerHTML;//textContent; //e.target.value;
-    console.log(content);
+
     memos[id] = { ...memos[id], createdAt: createdAt || new Date().toLocaleString() };
     memos[id] = { ...memos[id], updatedAt: new Date().toLocaleString() };
     memos[id] = { ...memos[id], text: content };
@@ -595,6 +606,7 @@ function handleTheme() {
 
 function onKeydown(e) {
   if ((e.code === "KeyT" || e.keyCode === 84) && e.altKey) {
+    audioPlay(seToggleSwitch);
     toggleTheme();
     addDOM();
     console.log(whatTimeIsIt());
