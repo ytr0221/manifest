@@ -533,6 +533,7 @@ function handleBoardDragEnd(e) {
   }
 
   if (width >= 80 && height >= 80) {
+    
     const id = generateUUID();
     const dateNow = new Date().toLocaleString();
     const memo = createMemo(id, null, { top, left }, { width, height }, dateNow, dateNow);
@@ -542,10 +543,18 @@ function handleBoardDragEnd(e) {
     textarea.focus();
 
     const memos = getLocalStorageItem("manifest_memos");
+    
     memos[id] = { text: null, position: { top, left }, size: { width, height } };
     setLocalStorageItem("manifest_memos", memos);
 
     activeMemo = memo;
+
+   // memos.forEach(element => console.log(element, "+" ,width, height));
+  } else {
+    const memos = getLocalStorageItem("manifest_memos");
+    Object.keys(memos).forEach(function (key) {
+      console.log(key + "は" + memos[key].size.width + "");
+    });
   }
 
   document.body.style.cursor = null;
@@ -704,6 +713,7 @@ function onLoad() {
     memos[DEFAULT_MEMO.id] = { text: DEFAULT_MEMO.text, position: DEFAULT_MEMO.position, size: DEFAULT_MEMO.size };
     setLocalStorageItem("manifest_memos", memos);
   } else {
+    //load data
     for (const key of Object.keys(memos)) {
       const memo = createMemo(key, memos[key].text, memos[key].position, memos[key].size, memos[key].createdAt, memos[key].updatedAt);
       board.appendChild(memo);
